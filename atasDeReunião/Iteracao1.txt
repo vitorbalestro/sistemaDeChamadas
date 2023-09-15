@@ -1,0 +1,11 @@
+Reunião da primeira iteração da primeira entrega (14/09 a 20/09), realizada no dia 15/09:
+
+Participaram: David Lopes; João da Costa; Vitor Balestro; Erik; Thiago Aragão; Matheus Janibelli; Gabriel Tavares.
+
+Atribuições:
+Decidido ter uma reunião sempre no primeiro dia de cada iteração
+Dividiremos as tarefas em realizar a parte de gestão e iniciar o front-ende do app
+Dividisão da equipe nesta parte:
+  >Gestão e montagem textual: João da Costa; Tavares; Erik
+  >Front-end: David; Vitor; Janibelli; Thiago
+Tecnologias envolvidas decididas: React Native; Expo 
