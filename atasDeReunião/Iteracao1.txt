@@ -8,4 +8,5 @@ Dividiremos as tarefas em realizar a parte de gestão e iniciar o front-ende do 
 Dividisão da equipe nesta parte:
   >Gestão e montagem textual: João da Costa; Tavares; Erik
   >Front-end: David; Vitor; Janibelli; Thiago
-Tecnologias envolvidas decididas: React Native; Expo 
+Tecnologias envolvidas decididas: React Native; Expo.
+Decidido que realizaremos um pull request ao final da segunda iteração. Ainda em aberto se a equié toda se reunirá para esta tarefa ou um será eleito arquiteto de software para esta tarefa.
