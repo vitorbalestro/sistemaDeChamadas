@@ -1,4 +1,5 @@
 import { Text, StyleSheet, View, ScrollView } from 'react-native';
+import { Link } from 'react-router-native'
 
 const styles = StyleSheet.create({
     appBarText: {
@@ -19,10 +20,12 @@ const styles = StyleSheet.create({
     },
 })
 
-const AppBarTab = ({ title }) => {
-    return <View>
-        <Text style={styles.appBarText}>{title}</Text>
-    </View>
+const AppBarTab = ({ title, route }) => {
+    return (
+    <Link to={route}>
+            <Text style={styles.appBarText}>{title}</Text>
+    </Link>
+    )
 }
 const appBarStyles = [ styles.container, styles.appBar ];
 
@@ -30,9 +33,9 @@ const SignedInAppBar = () => {
     return (
         <View style={appBarStyles}> 
             <ScrollView  contentContainerStyle={{ gap: 15 }} horizontal>
-                <AppBarTab title="Início" />
-                <AppBarTab title="Minhas Turmas" />
-                <AppBarTab title="Sair"/>
+                <AppBarTab title="Aluno" route="/aluno" />
+                <AppBarTab title="Professor" route="/turma" />
+                <AppBarTab title="Sair" route="/"/>
             </ScrollView>
         </View>
     )

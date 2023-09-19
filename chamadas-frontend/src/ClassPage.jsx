@@ -138,7 +138,6 @@ const ClassPage = () => {
 
     return (
         <View style={styles.container}>
-            <AppBar />
             <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
                 <FlatList
                     ListHeaderComponent={<ListHeader className={className} />}

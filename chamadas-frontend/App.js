@@ -1,8 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import ClassPage from './src/ClassPage';
+import HomePage from './src/HomePage';
+import { NativeRouter } from 'react-router-native';
+
+
 
 export default function App() {
-  return <ClassPage />;
-}
+  return( 
+    <NativeRouter>
+      <HomePage />
+    </NativeRouter> 
+    
+  )
+  }
 
