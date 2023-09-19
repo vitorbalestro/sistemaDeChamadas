@@ -4,7 +4,7 @@ import { Link } from 'react-router-native'
 const styles = StyleSheet.create({
     appBarText: {
         color: "white",
-        fontWeight: 700
+        //fontWeight: 700
     },
     container: {
         height: 40,

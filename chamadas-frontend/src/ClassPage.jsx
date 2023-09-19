@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center', 
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
         fontSize: 17
     },
     dateHeaderStyle: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        fontWeight: 'bold'
+        //fontWeight: 'bold'
     },
     presenteButton: {
         justifyContent: 'center',
@@ -108,10 +108,10 @@ const StudentCard = ({ student }) => {
             <View style={styles.flexCard}>
                 <Text style={styles.nameStyle}>{student}</Text>
                 <Pressable onPress={() => onPressPresente({student})} style={styles.presenteButton}>
-                    <Text style={{fontWeight: 'bold', color:'white'}}>Presente</Text>
+                    <Text style={{/*fontWeight: 'bold',*/ color:'white'}}>Presente</Text>
                 </Pressable>
                 <Pressable onPress={()=> onPressAusente({student})} style={styles.ausenteButton}>
-                    <Text style={{fontWeight: 'bold', color:'white'}}>Ausente</Text>
+                    <Text style={{/*fontWeight: 'bold',*/ color:'white'}}>Ausente</Text>
                 </Pressable>
             </View>
         </Pressable>
