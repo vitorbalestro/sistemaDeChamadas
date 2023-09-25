@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Chamada Inteligente" company="" webLink="http://" view-date="2023-09-01" view-index="0" gantt-divider-location="453" resource-divider-location="300" version="3.2.3230" locale="pt_BR">
+    <description/>
+    <view zooming-state="default:8" id="gantt-chart">
+        <field id="tpd3" name="Nome" width="258" order="0"/>
+        <field id="tpd4" name="Data inicial" width="97" order="1"/>
+        <field id="tpd5" name="Data final" width="97" order="2"/>
+        <option id="filter.completedTasks" value="false"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nome" width="210" order="0"/>
+        <field id="1" name="Função" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="1. Sistema de login" meeting="false" start="2023-09-28" duration="7" complete="0" expand="true">
+            <task id="21" name="1.1 Funcionamento de login" color="#8cb6ce" meeting="false" start="2023-09-28" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="1" name="2. Interface" color="#8cb6ce" meeting="false" start="2023-09-15" duration="16" complete="0" thirdDate="2023-09-25" thirdDate-constraint="0" expand="true">
+            <task id="3" name="2.1 Tela de login" color="#8cb6ce" meeting="false" start="2023-09-15" duration="5" complete="0" thirdDate="2023-09-04" thirdDate-constraint="0" expand="true"/>
+            <task id="10" name="2.2 Tela de confirmação de presença" color="#8cb6ce" meeting="false" start="2023-09-15" duration="5" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="false">
+                <task id="12" name="2.2.1 Confirmação para alunos" color="#8cb6ce" meeting="false" start="2023-09-15" duration="5" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                <task id="13" name="2.2.2 Confirmação para professores" color="#8cb6ce" meeting="false" start="2023-09-15" duration="5" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="11" name="2.3 Tela de abertura de lista de chamada" color="#8cb6ce" meeting="false" start="2023-09-15" duration="10" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+            <task id="14" name="2.4 Aba de alteração de matrícula" color="#8cb6ce" meeting="false" start="2023-09-28" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="6" name="3. GPS" color="#8cb6ce" meeting="false" start="2023-10-05" duration="9" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true">
+            <task id="15" name="3.1 Gerênciamento de posição" color="#8cb6ce" meeting="false" start="2023-10-05" duration="9" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true">
+                <task id="16" name="3.1.1 Posição de alunos" color="#8cb6ce" meeting="false" start="2023-10-05" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                <task id="17" name="3.1.2 Posição de professores" color="#8cb6ce" meeting="false" start="2023-10-13" duration="3" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+            </task>
+        </task>
+        <task id="7" name="4. Gestão de Turma" color="#8cb6ce" meeting="false" start="2023-10-05" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true">
+            <task id="18" name="4.1 Abertura de lista de chamada" meeting="false" start="2023-10-05" duration="7" complete="0" expand="true">
+                <task id="19" name="4.1.1 Manualmente pelo professor" color="#8cb6ce" meeting="false" start="2023-10-05" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                <task id="20" name="4.1.2 Automaticamente por hora marcada" color="#8cb6ce" meeting="false" start="2023-10-05" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+            </task>
+        </task>
+        <task id="8" name="5. Gerência de dados" color="#8cb6ce" meeting="false" start="2023-10-05" duration="13" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true">
+            <task id="37" name="5.1 Banco de dados" meeting="false" start="2023-10-05" duration="7" complete="0" expand="true">
+                <task id="38" name="5.1.1 Criação de modelo" color="#8cb6ce" meeting="false" start="2023-10-05" duration="3" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+                <task id="39" name="5.1.2 Criação de tabelas e implementação" color="#8cb6ce" meeting="false" start="2023-10-09" duration="5" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="22" name="5.2 Geração de estatístas de alunos" color="#000000" meeting="false" start="2023-10-13" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true">
+                <task id="23" name="5.1.1 Porcentagem de presenças" color="#8cb6ce" meeting="false" start="2023-10-13" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                <task id="24" name="5.1.2 Número médio de horas por aula" color="#8cb6ce" meeting="false" start="2023-10-13" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="25" name="5.3 Geração de estatístas de professor" color="#000000" meeting="false" start="2023-10-13" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true">
+                <task id="26" name="5.3.1 Número de alunos inscritos por disciplina" color="#8cb6ce" meeting="false" start="2023-10-13" duration="7" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+            </task>
+        </task>
+        <task id="9" name="6. Gerênciamento de projeto" meeting="false" start="2023-09-14" duration="51" complete="0" expand="false">
+            <task id="28" name="6.1 Reuniões semanais" color="#8cb6ce" meeting="false" start="2023-09-14" duration="51" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+            <task id="29" name="6.2 Documentação" color="#8cb6ce" meeting="false" start="2023-09-18" duration="8" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="false">
+                <task id="30" name="6.2.1 EAP" color="#8cb6ce" meeting="false" start="2023-09-18" duration="3" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                <task id="36" name="6.2.2 Diagrama de gantt" color="#8cb6ce" meeting="false" start="2023-09-25" duration="2" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                <task id="31" name="6.2.3 Documento de requisítos" color="#8cb6ce" meeting="false" start="2023-09-18" duration="4" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                <task id="32" name="6.2.3 Estimativas" color="#8cb6ce" meeting="false" start="2023-09-25" duration="3" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true">
+                    <task id="33" name="6.2.3.1 Estimativa de custo" color="#8cb6ce" meeting="false" start="2023-09-25" duration="3" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                    <task id="34" name="6.2.3.2 Estimativa de esforço" color="#8cb6ce" meeting="false" start="2023-09-25" duration="3" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+                </task>
+            </task>
+            <task id="35" name="6.3 Orçamento" color="#8cb6ce" meeting="false" start="2023-09-25" duration="2" complete="0" thirdDate="2023-08-14" thirdDate-constraint="0" expand="true"/>
+        </task>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
