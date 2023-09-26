@@ -1,7 +1,6 @@
 import { FlatList, View, StyleSheet, Text, Pressable, Dimensions } from 'react-native';
-import AppBar from './AppBar';
 
-const windowWidth = Dimensions.get('window').width;
+const windowWidth = Dimensions.get('screen').width;
 
 const styles = StyleSheet.create({
     container: {

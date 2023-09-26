@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import { Routes, Route } from 'react-router-native';
 import AppBar from './AppBar';
 import ClassPage from './ClassPage';
+import TurmasPage from './TurmasPage';
 
 const styles = StyleSheet.create({
     container: {
@@ -17,7 +18,7 @@ const HomePage = () => {
         <View style={styles.container}>
           <AppBar />
           <Routes>
-            <Route path="/turma" element={<ClassPage />} exact />
+            <Route path="/turma" element={<TurmasPage />} exact />
             <Route path="/aluno" element={<ClassPage />} exact />
           </Routes>
         </View>
