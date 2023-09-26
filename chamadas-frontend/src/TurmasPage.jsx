@@ -1,4 +1,5 @@
 import { FlatList, View, StyleSheet, Text, Pressable, Dimensions } from 'react-native';
+import { useNavigate } from 'react-router-native';
 
 const windowWidth = Dimensions.get('screen').width;
 
@@ -53,9 +54,13 @@ const turmas = ["TCC00284 - Algoritmos em Grafos",
                 "TCC00348 - Estruturas de Dados e seus Algoritmos"]
 
 
-const TurmaCard = ({ turma }) => {
+
+const onPressCard = ({ turma, navigate }) => {
+    navigate("/turma");
+}
+const TurmaCard = ({ turma, navigate }) => {
     return (
-        <Pressable onPress={() => onPressCard({ turma })}>
+        <Pressable onPress={() => onPressCard({ turma, navigate })}>
             <View style={styles.flexCard}>
                 <Text style={styles.nameStyle}>{turma}</Text>
             </View>
@@ -85,6 +90,7 @@ const TurmasHeader = () => {
 }
 
 const TurmasPage = () => {
+    const navigate = useNavigate();
 
     return ( 
         <View style={styles.container}>
@@ -93,7 +99,7 @@ const TurmasPage = () => {
                     ListHeaderComponent={<TurmasHeader />}
                     data={turmas}
                     ItemSeparatorComponent={ItemSeparator}
-                    renderItem={({ item }) => <TurmaCard turma={item}/>}
+                    renderItem={({ item }) => <TurmaCard turma={item} navigate={navigate}/>}
                 />
             </View>
         </View>

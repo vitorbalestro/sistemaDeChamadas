@@ -8,18 +8,22 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigate } from 'react-router-native';
 
 export default function Login() {
   const [matricula, setMatricula] = useState('');
   const [senha, setSenha] = useState('');
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     // Lógica de autenticação aqui
     console.log('Matrícula:', matricula);
     console.log('Senha:', senha);
+    navigate("/aluno")
   };
 
   const toggleMostrarSenha = () => {
@@ -28,7 +32,7 @@ export default function Login() {
 
   return (
     <ImageBackground
-      source={require('C:/UFF/ES2/ss/sistemaDeChamadas-main/chamadas-frontend/assets/uff-logo.png')}
+      source={require('/assets/uff-logo.png')}
       style={styles.backgroundImage}
     >
       <KeyboardAvoidingView

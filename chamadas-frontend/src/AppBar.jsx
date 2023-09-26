@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     appBar: {
         backgroundColor: 'blue',
         paddingLeft:5
-    },
+    }
 })
 
 const AppBarTab = ({ title, route }) => {
@@ -33,8 +33,9 @@ const SignedInAppBar = () => {
     return (
         <View style={appBarStyles}> 
             <ScrollView  contentContainerStyle={{ gap: 15 }} horizontal>
+                <AppBarTab title="Login" route="/login" />
                 <AppBarTab title="Aluno" route="/aluno" />
-                <AppBarTab title="Professor" route="/turma" />
+                <AppBarTab title="Professor" route="/turmas" />
                 <AppBarTab title="Sair" route="/"/>
             </ScrollView>
         </View>
