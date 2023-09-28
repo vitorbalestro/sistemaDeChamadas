@@ -51,10 +51,9 @@ const SignedInAppBar = () => {
     return (
         <View style={appBarStyles}> 
             <ScrollView  contentContainerStyle={{ gap: 15 }} horizontal>
-                <AppBarTab title="Login" route="/login" />
                 <AppBarTab title="Aluno" route="/turmas/aluno" />
                 <AppBarTab title="Professor" route="/turmas/professor" />
-                <AppBarTab title="Sair" route="/"/>
+                <AppBarTab title="Sair" route="/login"/>
             </ScrollView>
         </View>
     )
