@@ -1,0 +1,16 @@
+Reunião da gestão - segunda iteração (21/09 a 27/09), realizada no dia 24/09:
+Participaram: João da Costa, Gabriel Tavares, Erik.
+Problemas identificados:
+>A tela de seleção de matrícula foi considerada como algo à parte. Porém, na prática, isso não seria funcional. Conversar com a equipe front-end para encontrar uma saída.
+Solução: tratar a seleção de matrícula como funcionalidade de uma tela.
+>Retrabalhar a questão do login devido ao fato de ser o mesmo login para um aluno e para um professor.
+Solução: alterar a EAP.
+>Surgiu a necessidade de se comunicar com todo o grupo para falar sobre a questão da inclusão dos assuntos relacionados às apresentações no diagrama de Gantt. Também devemos conversar sobre a inclusão de assuntos que ainda não vimos no cronograma. Exemplo: Planning Poker. 
+Sugestão: Comunicar durante a apresentação a ausência de assuntos que ainda não foram abordados em aula no cronograma.
+>Necessidade da inclusão das atas da gestão no github.
+Aquisições:
+>Diagrama de Gantt (Gabriel e Erik)
+>Estimativas (João)
+>APF (Erik)
+Objetivos para próximas iterações:
+>Alterar o Gantt para incluir tempo de testagem. 

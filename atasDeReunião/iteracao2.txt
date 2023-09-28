@@ -1,8 +1,0 @@
-Segunda Iteração
-
-PERÍODO: 22/09 a 29/09.
-
-Objetivo: implementar o backend da aplicação.
-
-Descrição: criar e implementar o modelo objeto-relacional para o banco de dados de presenças
-(aulas, usuários, turmas,...).

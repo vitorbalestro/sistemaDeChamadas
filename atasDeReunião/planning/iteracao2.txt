@@ -1,0 +1,7 @@
+Reunião de início da segunda iteração (21/09 a 27/09):
+Participaram: Erik, João, David, Matheus, Gabriel, Vitor
+Parte 1 -- frontend: os membros responsáveis pelo frontend na primeira iteração mostraram as telas criadas, e estas telas foram aprovadas.
+A tela de seleção de turmas não foi entregue por razões médicas do Thiago. 
+O planejamento da segunda iteração é o seguinte: David trabalhará na apresentação da demo, Vitor e Matheus trabalharão na produção de uma primeira versão funcional do aplicativo. 
+Caso a emergência médica do Thiago impeça que ele entregue a tela de seleção de turmas até a próxima terça-feira (26/09), o Matheus e o Vitor assumirão esta tarefa.
+Parte 2 -- gestão: ocorreu uma conversa entre as equipes de desenvolvimento e gestão para pontuar as atividades do EAP do projeto. Para esta iteração, a equipe de gestão elaborará as estimativas de esforço e custo, o orçamento e o cronograma de desenvolvimento (Gantt). 
