@@ -1,4 +1,5 @@
 import { Text, StyleSheet, View, ScrollView } from 'react-native';
+import React, { useState } from 'react'
 import { Link } from 'react-router-native'
 
 const styles = StyleSheet.create({
@@ -18,6 +19,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'blue',
         paddingLeft:5
     },
+    saveAreaViewContainer: {
+        flex: 1, 
+        backgroundColor: '#FFF'
+    },
+    viewContainer: {
+        flex: 1, 
+        backgroundColor: '#FFF'
+    },
+    scrollViewContainer: {
+        flexGrow: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: '10%',
+    },
+    divider: {
+        width: 12
+    },
 })
 
 const AppBarTab = ({ title, route }) => {
@@ -33,9 +51,9 @@ const SignedInAppBar = () => {
     return (
         <View style={appBarStyles}> 
             <ScrollView  contentContainerStyle={{ gap: 15 }} horizontal>
-                <AppBarTab title="Aluno" route="/aluno" />
-                <AppBarTab title="Professor" route="/turma" />
-                <AppBarTab title="Sair" route="/"/>
+                <AppBarTab title="Aluno" route="/turmas/aluno" />
+                <AppBarTab title="Professor" route="/turmas/professor" />
+                <AppBarTab title="Sair" route="/login"/>
             </ScrollView>
         </View>
     )
@@ -45,7 +63,8 @@ const SignedInAppBar = () => {
 
 const AppBar = () => {
 
-    return <SignedInAppBar />
+
+    return <SignedInAppBar  />
 };
 
 

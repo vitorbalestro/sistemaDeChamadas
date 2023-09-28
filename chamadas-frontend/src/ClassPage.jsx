@@ -1,4 +1,5 @@
 import { FlatList, View, StyleSheet, Text, Pressable, Dimensions } from 'react-native';
+import { useParams } from 'react-router-native';
 
 const windowWidth = Dimensions.get('screen').width;
 
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: windowWidth - 20,
         borderStyle: 'solid',
-        borderColor: 'grey',
+        borderColor: 'lightgrey',
         borderWidth: StyleSheet.hairlineWidth, 
         borderRadius: 5, 
     },
@@ -117,8 +118,6 @@ const StudentCard = ({ student }) => {
     )
 }
 
-const className = "TCC00293 - Engenharia de Software II";
-
 const students = ["Lexie George",
     "Nikolas Fisher",
     "Mayra Jackson",
@@ -135,11 +134,14 @@ const students = ["Lexie George",
 
 const ClassPage = () => {
 
+    const id = useParams().id;
+    const turmaHeader = id.split("-")[0] + " - " + id.split("-")[1]
+
     return (
         <View style={styles.container}>
             <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
                 <FlatList
-                    ListHeaderComponent={<ListHeader className={className} />}
+                    ListHeaderComponent={<ListHeader className={turmaHeader} />}
                     data={students}
                     ItemSeparatorComponent={ItemSeparator}
                     renderItem={({ item }) => <StudentCard student={item}/>}

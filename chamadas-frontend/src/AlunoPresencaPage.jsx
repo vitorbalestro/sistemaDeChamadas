@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, View, StyleSheet, Pressable} from 'react-native';
-import {Card} from 'react-native-elements'
-
+import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Card } from 'react-native-elements'
+import { useParams } from 'react-router-native'
 
 const styles = StyleSheet.create({
     center: {
       alignItems: 'center',
+      justifyContent: 'center'
     },
     button: {
       alignItems: 'center',
@@ -33,7 +34,7 @@ const onPressPresente = () => {
 const ApresentarTurma = props => {
     return (
         <View style={styles.center}>
-            <Text>Turma: {props.class}</Text>
+            <Text style={styles.center}>{props.class}</Text>
         </View>
     )
 }
@@ -54,19 +55,51 @@ const ApresentarProfessor = props => {
     );
 };
 
+const turmas = [
+  {
+      name: "TCC00284 - Algoritmos em Grafos",
+      professor: "Fábio Protti",
+      time: "11:00 às 13:00"
+  },
+  {
+      name: "TCC00293 - Engenharia de Software II",
+      professor: "Leonardo Murta",
+      time: "7:00 às 9:00"
+  },
+  {
+      name: "TCC00384 - Estruturas de Dados e seus Algoritmos",
+      professor: "Isabel Rosseti",
+      time: "11:00 às 13:00"
+  },
+]
   
+// funções temporárias para resgatar dados da turma carregada
 
-const profName = "Leonardo Murta";
-const className = "TCC00293 - Engenharia de Software II";
+function getProfessor( turmaId ){
+  const turma = turmas.filter(item => item.name.split("-")[0].trim() === turmaId)
+  return turma[0].professor
+} 
+
+function getTime( turmaId ){
+  const turma = turmas.filter(item => item.name.split("-")[0].trim() === turmaId)
+  return turma[0].time
+}
+
 const classTime = "07:00 - 09:00";
 
 const AlunoPresencaPage = () => {
+
+    const id = useParams().id
+    const turmaName = id.split("-")[0] + " - " + id.split("-")[1]
+    const turmaId = id.split("-")[0].trim()
+    const professor = getProfessor(turmaId)
+    const _time = getTime(turmaId)
     return (
       <View style={[styles.center, {top: 50}]}>
-        <Card>
-          <ApresentarTurma class={className}></ApresentarTurma>
-          <ApresentarHorarioTurma time={classTime}></ApresentarHorarioTurma>
-          <ApresentarProfessor name={profName} />
+        <Card style={styles.center}>
+          <ApresentarTurma class={turmaName}></ApresentarTurma>
+          <ApresentarHorarioTurma time={_time}></ApresentarHorarioTurma>
+          <ApresentarProfessor name={professor} />
         </Card>
         <Pressable style={styles.button} onPress={onPressPresente}>
           <Text style={styles.text}>{"Marcar presença"}</Text>

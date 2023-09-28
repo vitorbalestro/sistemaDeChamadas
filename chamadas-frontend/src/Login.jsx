@@ -8,18 +8,40 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigate } from 'react-router-native';
 
 export default function Login() {
-  const [matricula, setMatricula] = useState('');
+  const navigate = useNavigate();
+  const [cpf, setCPF] = useState('');
   const [senha, setSenha] = useState('');
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
+  const handleCPFChange = (text) => {
+    const numericValue = text.replace(/\D/g, '');
+
+    const maxLength = 11;
+    const truncatedCPF = numericValue.slice(0, maxLength);
+
+    let formattedCPF = '';
+    for (let i = 0; i < maxLength; i++) {
+      if (i === 3 || i === 6) {
+        formattedCPF += '.';
+      } else if (i === 9) {
+        formattedCPF += '-';
+      }
+      formattedCPF += truncatedCPF.charAt(i);
+    }
+
+  setCPF(formattedCPF);
+};
+
   const handleLogin = () => {
-    // Lógica de autenticação aqui
-    console.log('Matrícula:', matricula);
+    console.log('CPF:', cpf);
     console.log('Senha:', senha);
+    navigate('/turmas/aluno')
   };
 
   const toggleMostrarSenha = () => {
@@ -28,7 +50,7 @@ export default function Login() {
 
   return (
     <ImageBackground
-      source={require('C:/UFF/ES2/ss/sistemaDeChamadas-main/chamadas-frontend/assets/uff-logo.png')}
+      source={require('/assets/uff-logo.png')}
       style={styles.backgroundImage}
     >
       <KeyboardAvoidingView
@@ -42,12 +64,9 @@ export default function Login() {
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Número de Matrícula"
-            onChangeText={(text) => {
-              const numericValue = text.replace(/[^0-9]/g, '');
-              setMatricula(numericValue);
-            }}
-            value={matricula}
+            placeholder="CPF"
+            onChangeText={handleCPFChange}
+            value={cpf}
             keyboardType="numeric"
           />
           <View style={styles.passwordContainer}>
@@ -67,7 +86,7 @@ export default function Login() {
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={styles.loginButton} // Estilo do botão
+            style={styles.loginButton}
             onPress={handleLogin}
           >
             <Text style={styles.loginButtonText}>Login</Text>
