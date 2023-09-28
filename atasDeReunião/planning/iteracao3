@@ -1,0 +1,20 @@
+Iteração3
+
+Participantes: Thiago Aragão; David Lopes; Erik; Gabriel Tavares; Vitor Balestro; Matheus Janibelli; João da Costa
+
+Assuntos:
+Revisão das partes de gestão e de desenvolvimento para a primeira entrega do trabalho.
+
+Review das telas front-end para a primeira entrega.
+
+Pull request e aprovação do desenvolvimento para a main.
+
+Decidido a necessidade de re-roteamento das telas, para iniciar no, login e o botão sair para levar o login. Foi percebido que a tela inicial do app está ficando numa camada atrás das outras telas, como, ao clicar na tela do professor, a tela inicial aparece junta, com os detalhes da tela do professor aparecendo por cima.
+
+Revisão da tela de Gantt pela equipe.
+
+Revisão dos custos e oraçamento pela equipe.
+
+Revisão da APF pela equipe.
+
+Decidido manter iterações de 1 semana para a segunda entrega.
