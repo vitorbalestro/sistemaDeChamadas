@@ -32,6 +32,4 @@ presencaRouter.delete('/:id', async (req,res) => {
     res.json(presencaDeleted)
 })
 
-
-
 module.exports = presencaRouter
