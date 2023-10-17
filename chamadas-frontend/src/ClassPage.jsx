@@ -31,6 +31,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 13,
     },
+    porcentageStyle: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontStyle: 'italic',
+        color: 'gray',
+    },
     classHeaderStyle: {
         marginTop: 20,
         marginBottom: 5,
@@ -47,10 +54,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         //fontWeight: 'bold'
     },
-    presenteButton: {
+    presenteDarButton: {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'blue',
+        width: 65,
+        height: 25,
+        borderRadius: 5,
+    },
+    presencaDadaButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'green',
         width: 65,
         height: 25,
         borderRadius: 5,
@@ -106,31 +121,32 @@ const StudentCard = ({ student }) => {
 
         <Pressable onPress={() => onPressCard({student})}>
             <View style={styles.flexCard}>
-                <Text style={styles.nameStyle}>{student}</Text>
-                <Pressable onPress={() => onPressPresente({student})} style={styles.presenteButton}>
+                <Text style={styles.nameStyle}>{student.nome}</Text>
+                <Pressable onPress={() => onPressPresente({student})} style={student.presencaDada==="não" ? styles.presenteDarButton : styles.presencaDadaButton}>
                     <Text style={{/*fontWeight: 'bold',*/ color:'white'}}>Presente</Text>
                 </Pressable>
                 <Pressable onPress={()=> onPressAusente({student})} style={styles.ausenteButton}>
                     <Text style={{/*fontWeight: 'bold',*/ color:'white'}}>Ausente</Text>
                 </Pressable>
+                <Text style={styles.porcentageStyle}>{student.porcentagem}</Text>
             </View>
         </Pressable>
     )
 }
 
-const students = ["Lexie George",
-    "Nikolas Fisher",
-    "Mayra Jackson",
-    "Jewel Watson",
-    "Alexandra Finley",
-    "Emmalee French",
-    "Andres Roth",
-    "Bailey Everett",
-    "Catalina Chaney",
-    "Elisabeth Fuentes",
-    "Deven Bishop",
-    "Cael Rosario",
-    "Christopher Smith Hartmann Fields"]
+const students = [{nome: "Lexie George", presencaDada: "sim", porcentagem: "X%"},
+    {nome: "Nikolas Fisher", presencaDada: "não", porcentagem: "X%"},
+    {nome: "Mayra Jackson", presencaDada: "sim", porcentagem: "X%"},
+    {nome: "Jewel Watson", presencaDada: "não", porcentagem: "X%"},
+    {nome: "Alexandra Finley", presencaDada: "sim", porcentagem: "X%"},
+    {nome: "Emmalee French", presencaDada: "não", porcentagem: "X%"},
+    {nome: "Andres Roth", presencaDada: "sim", porcentagem: "X%"},
+    {nome: "Bailey Everett", presencaDada: "não", porcentagem: "X%"},
+    {nome: "Catalina Chaney", presencaDada: "sim", porcentagem: "X%"},
+    {nome: "Elisabeth Fuentes", presencaDada: "não", porcentagem: "X%"},
+    {nome: "Deven Bishop", presencaDada: "sim", porcentagem: "X%"},
+    {nome: "Cael Rosario", presencaDada: "não", porcentagem: "X%"},
+    {nome: "Christopher Smith Hartmann Fields", presencaDada: "sim", porcentagem: "X%"}]
 
 const ClassPage = () => {
 
