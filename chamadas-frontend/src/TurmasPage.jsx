@@ -94,7 +94,12 @@ const turmas = [
 
 const onPressButton = (action, turma, navigate, role) => {
     if (role === 'aluno') {
-        alert(`Ação: ${action} - Turma: ${turma.name}`);
+        if (action === 'Presença') {
+            const turmaUrl = `/turma/${encodeURIComponent(turma.name)}`;
+            navigate(turmaUrl);
+        } else {
+            navigate(`/classpage/${encodeURIComponent(turma.name)}`);
+        }
     }
     if (role === 'professor') {
         if (action === 'Presença') {
