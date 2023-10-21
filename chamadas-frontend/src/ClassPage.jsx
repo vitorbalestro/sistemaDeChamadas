@@ -31,12 +31,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 13,
     },
-    porcentageStyle: {
+    porcentNeg: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         fontStyle: 'italic',
-        color: 'gray',
+        color: 'red',
+    },
+    porcentPos: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontStyle: 'italic',
+        color: 'green',
     },
     classHeaderStyle: {
         marginTop: 20,
@@ -58,17 +65,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'blue',
+        border: '1px solid blue',
         width: 65,
         height: 25,
         borderRadius: 5,
     },
+    textPresenteDarButton: {
+        color: 'white'
+    },
     presencaDadaButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'green',
+        backgroundColor: 'white',
+        border: '1px solid blue',
         width: 65,
         height: 25,
         borderRadius: 5,
+    },
+    textPresencaDadaButton: {
+        color: 'blue'
     },
     ausenteButton: {
         justifyContent: 'center',
@@ -103,55 +118,60 @@ const ListHeader = ({ className }) => {
     )
 }
 
-const onPressCard = ({ student }) => {
+let onPressCard = ({ student }) => {
     console.log(JSON.stringify({student}));
 }
 
-const onPressPresente=({ student }) => {
+let onPressPresente=({ student }) => {
     console.log(JSON.stringify({student})+' Presente');
+    if (student.presencaDada==="não") {
+        student.presencaDada="sim";
+    } else {
+        student.presencaDada="não";
+    }
 }
 
 
-const onPressAusente=({ student }) => {
+let onPressAusente=({ student }) => {
     console.log(JSON.stringify({student})+' Ausente');
 }
 
-const StudentCard = ({ student }) => {
+let StudentCard = ({ student }) => {
     return (
 
         <Pressable onPress={() => onPressCard({student})}>
             <View style={styles.flexCard}>
                 <Text style={styles.nameStyle}>{student.nome}</Text>
                 <Pressable onPress={() => onPressPresente({student})} style={student.presencaDada==="não" ? styles.presenteDarButton : styles.presencaDadaButton}>
-                    <Text style={{/*fontWeight: 'bold',*/ color:'white'}}>Presente</Text>
+                    <Text style={student.presencaDada==="não" ? styles.textPresenteDarButton : styles.textPresencaDadaButton}>Presente</Text>
                 </Pressable>
                 <Pressable onPress={()=> onPressAusente({student})} style={styles.ausenteButton}>
-                    <Text style={{/*fontWeight: 'bold',*/ color:'white'}}>Ausente</Text>
+                    <Text style={{color:'white'}}>Ausente</Text>
                 </Pressable>
-                <Text style={styles.porcentageStyle}>{student.porcentagem}</Text>
+                <Text style={student.porcentagem>=75 ? styles.porcentPos : styles.porcentNeg}>{student.porcentagem}%</Text>
             </View>
         </Pressable>
     )
 }
 
-const students = [{nome: "Lexie George", presencaDada: "sim", porcentagem: "X%"},
-    {nome: "Nikolas Fisher", presencaDada: "não", porcentagem: "X%"},
-    {nome: "Mayra Jackson", presencaDada: "sim", porcentagem: "X%"},
-    {nome: "Jewel Watson", presencaDada: "não", porcentagem: "X%"},
-    {nome: "Alexandra Finley", presencaDada: "sim", porcentagem: "X%"},
-    {nome: "Emmalee French", presencaDada: "não", porcentagem: "X%"},
-    {nome: "Andres Roth", presencaDada: "sim", porcentagem: "X%"},
-    {nome: "Bailey Everett", presencaDada: "não", porcentagem: "X%"},
-    {nome: "Catalina Chaney", presencaDada: "sim", porcentagem: "X%"},
-    {nome: "Elisabeth Fuentes", presencaDada: "não", porcentagem: "X%"},
-    {nome: "Deven Bishop", presencaDada: "sim", porcentagem: "X%"},
-    {nome: "Cael Rosario", presencaDada: "não", porcentagem: "X%"},
-    {nome: "Christopher Smith Hartmann Fields", presencaDada: "sim", porcentagem: "X%"}]
+let students = [{nome: "Lexie George", presencaDada: "sim", porcentagem: 75},
+    {nome: "Nikolas Fisher", presencaDada: "não", porcentagem: 100},
+    {nome: "Mayra Jackson", presencaDada: "sim", porcentagem: 100},
+    {nome: "Jewel Watson", presencaDada: "não", porcentagem: 0},
+    {nome: "Alexandra Finley", presencaDada: "sim", porcentagem: 10},
+    {nome: "Emmalee French", presencaDada: "não", porcentagem: 45},
+    {nome: "Andres Roth", presencaDada: "sim", porcentagem: 93},
+    {nome: "Bailey Everett", presencaDada: "não", porcentagem: 50},
+    {nome: "Catalina Chaney", presencaDada: "sim", porcentagem: 89},
+    {nome: "Elisabeth Fuentes", presencaDada: "não", porcentagem: 74},
+    {nome: "Deven Bishop", presencaDada: "sim", porcentagem: 63},
+    {nome: "Cael Rosario", presencaDada: "não", porcentagem: 77},
+    {nome: "Christopher Smith Hartmann Fields", presencaDada: "sim", porcentagem: 1}]
 
-const ClassPage = () => {
+let ClassPage = () => {
 
-    const id = useParams().id;
-    const turmaHeader = id.split("-")[0] + " - " + id.split("-")[1]
+    let id = useParams().id;
+    let turmaHeader = id.split("-")[0] + " - " + id.split("-")[1]
 
     return (
         <View style={styles.container}>
