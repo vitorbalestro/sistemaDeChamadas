@@ -1,6 +1,8 @@
 import React from 'react';
+import { useState, useEffect } from 'react'
 import { View, Text, Pressable, FlatList, StyleSheet, Dimensions } from 'react-native';
 import { useNavigate, useParams } from 'react-router-native';
+import turmasService from '../services/turma';
 
 const windowWidth = Dimensions.get('screen').width;
 
@@ -74,39 +76,24 @@ const styles = StyleSheet.create({
     },
 });
 
-const turmas = [
-    {
-        name: "TCC00284 - Algoritmos em Grafos",
-        professor: "Fábio Protti",
-        time: "11:00 às 13:00"
-    },
-    {
-        name: "TCC00293 - Engenharia de Software II",
-        professor: "Leonardo Murta",
-        time: "7:00 às 9:00"
-    },
-    {
-        name: "TCC00384 - Estruturas de Dados e seus Algoritmos",
-        professor: "Isabel Rosseti",
-        time: "11:00 às 13:00"
-    },
-];
+
+
 
 const onPressButton = (action, turma, navigate, role) => {
     if (role === 'aluno') {
         if (action === 'Presença') {
-            const turmaUrl = `/turma/${encodeURIComponent(turma.name)}`;
+            const turmaUrl = `/turma/${encodeURIComponent(turma.nome)}`;
             navigate(turmaUrl);
         } else {
-            navigate(`/classpage/${encodeURIComponent(turma.name)}`);
+            navigate(`/classpage/${encodeURIComponent(turma.nome)}`);
         }
     }
     if (role === 'professor') {
         if (action === 'Presença') {
-            const turmaUrl = `/turma/${encodeURIComponent(turma.name)}`;
+            const turmaUrl = `/turma/${encodeURIComponent(turma.nome)}`;
             navigate(turmaUrl);
         } else {
-            navigate(`/classpage/${encodeURIComponent(turma.name)}`);
+            navigate(`/classpage/${encodeURIComponent(turma.codigo)}`);
         }
     }
 };
@@ -114,7 +101,7 @@ const onPressButton = (action, turma, navigate, role) => {
 
 
 const TurmaCard = ({ turma, navigate, role }) => {
-    const turmaHeader = turma.name.split('-')[0] + ' - ' + turma.name.split('-')[1];
+    const turmaHeader = turma.codigo + ' - ' + turma.nome;
 
     return (
         <View>
@@ -164,6 +151,27 @@ const TurmasPage = () => {
     const navigate = useNavigate();
     const role = useParams().role;
     const roleHeader = role.charAt(0).toUpperCase() + role.slice(1);
+    const id = useParams().id;
+    const [ turmas, setTurmas ] = useState([]);
+    useEffect(() => {
+        async function fetchTurmas() {
+            if(role === 'professor') {
+                const response = await turmasService.getTurmasProfessor(id);
+                setTurmas(response);
+                return;
+            }
+            else if(role === 'aluno') {
+                const response = await turmasService.getTurmasAluno(id);
+                setTurmas(response);
+                return;
+            }
+            
+        }
+        fetchTurmas()
+        
+    }, [])
+    console.log(turmas);
+
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

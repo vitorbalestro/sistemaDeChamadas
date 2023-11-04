@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigate } from 'react-router-native';
+import loginService from '../services/login';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function Login() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
   const handleCPFChange = (text) => {
-    const numericValue = text.replace(/\D/g, '');
+    /*const numericValue = text.replace(/\D/g, '');
 
     const maxLength = 11;
     const truncatedCPF = numericValue.slice(0, maxLength);
@@ -35,13 +36,23 @@ export default function Login() {
       formattedCPF += truncatedCPF.charAt(i);
     }
 
-  setCPF(formattedCPF);
+  setCPF(formattedCPF);*/
+  setCPF(text)
 };
 
-  const handleLogin = () => {
-    console.log('CPF:', cpf);
-    console.log('Senha:', senha);
-    navigate('/turmas/aluno')
+  const handleLogin = async () => {
+    const credentials = { cpf, senha };
+    const user = await loginService.getUser(credentials);
+    const id = user.id;
+    const tipo = user.tipo;
+    if(tipo === "professor") {
+      navigate(`/turmas/professor/${id}`)
+    }
+    if(tipo === "aluno") {
+      navigate(`/turmas/aluno/${id}`)
+    }
+
+    
   };
 
   const toggleMostrarSenha = () => {

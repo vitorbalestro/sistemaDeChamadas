@@ -22,7 +22,7 @@ const HomePage = () => {
           <AppBar />
           <Routes>
             <Route path="/login" element={<Login />} exact />
-            <Route path="/turmas/:role" element={<TurmasPage />} exact />
+            <Route path="/turmas/:role/:id" element={<TurmasPage />} exact />
             <Route path="/aluno/:id" element={<AlunoPresencaPage />} exact />
             <Route path="/turma/:id" element={<ClassPage />} exact />
           </Routes>
