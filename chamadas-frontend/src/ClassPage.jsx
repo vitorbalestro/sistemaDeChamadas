@@ -171,7 +171,7 @@ let students = [{nome: "Lexie George", presencaDada: "sim", porcentagem: 75},
 let ClassPage = () => {
 
     let id = useParams().id;
-    let turmaHeader = id.split("-")[0] + " - " + id.split("-")[1]
+    let turmaHeader = id.split("-")[0]
 
     return (
         <View style={styles.container}>

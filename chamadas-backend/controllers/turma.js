@@ -26,14 +26,14 @@ turmaRouter.get('/:id', async (req,res) => {
 /* Retorna turma por id do professor */
 turmaRouter.get('/professor/:id_professor', async (req,res) => {
     const id_professor = req.params.id_professor
-    const turmas = await sequelize.query(`SELECT * FROM turma WHERE id_professor = ${id_professor}`, { type: QueryTypes.SELECT })
+    const turmas = await sequelize.query(`SELECT * FROM turma JOIN disciplina ON turma.id_disciplina = disciplina.id WHERE turma.id_professor = ${id_professor}`, { type: QueryTypes.SELECT })
     res.json(turmas)
 })
 
 /* Retornas as turmas em que um aluno está inscrito (por id do aluno) */
 turmaRouter.get('/aluno/:id_aluno', async (req,res) => {
     const turmas = await sequelize.query(
-        `SELECT * FROM turma WHERE id IN (SELECT id_turma FROM inscricao WHERE id_aluno = ${req.params.id_aluno});`, { type: QueryTypes.SELECT })
+        `SELECT * FROM turma JOIN disciplina ON turma.id_disciplina = disciplina.id WHERE turma.id IN (SELECT id_turma FROM inscricao WHERE id_aluno = ${req.params.id_aluno});`, { type: QueryTypes.SELECT })
     res.json(turmas)
 
 })

@@ -21,6 +21,8 @@ CREATE TABLE pessoa (
 
 );
 
+ALTER TABLE ADD CONSTRAINT cpf_uni UNIQUE (cpf);
+
 INSERT INTO pessoa 
  (id, tipo, cpf, nome)
 VALUES 
@@ -70,3 +72,19 @@ VALUES
  data timestamp NOT NULL,
  CONSTRAINT fk_inscricao FOREIGN KEY (id_inscricao) REFERENCES inscricao(id)
  );
+
+CREATE TABLE login_ (
+    id SERIAL PRIMARY KEY,
+    cpf char(11) NOT NULL,
+    senha varchar,
+    CONSTRAINT fk_cpf FOREIGN KEY (cpf) REFERENCES pessoa(cpf)
+);
+
+INSERT INTO login_ 
+(cpf,senha) 
+VALUES
+('12345678901','prof'),
+('12345678902', 'aluno'),
+('12345678903', 'aluno'),
+('12345678904', 'aluno'),
+('12345678905', 'aluno');
