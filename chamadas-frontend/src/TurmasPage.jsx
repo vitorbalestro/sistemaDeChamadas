@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 const onPressButton = (action, turma, navigate, role) => {
     if (role === 'aluno') {
         if (action === 'Presença') {
-            const turmaUrl = `/turma/${encodeURIComponent(turma.nome)}`;
+            const turmaUrl = `/aluno/${encodeURIComponent(turma.id)}`;
             navigate(turmaUrl);
         } else {
             navigate(`/classpage/${encodeURIComponent(turma.nome)}`);
@@ -170,7 +170,7 @@ const TurmasPage = () => {
         fetchTurmas()
         
     }, [])
-    console.log(turmas);
+    
 
     return (
         <View style={styles.container}>
