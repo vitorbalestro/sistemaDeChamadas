@@ -13,4 +13,9 @@ const getTurmasAluno = async (id) => {
     return response.data
 }
 
-export default { getTurmasProfessor, getTurmasAluno };
+const getTurmaPorId = async (id) => {
+    const response = await axios.get(`${baseUrl}/${id}`);
+    return response;
+}
+
+export default { getTurmasProfessor, getTurmasAluno, getTurmaPorId };

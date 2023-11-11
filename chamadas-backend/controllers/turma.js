@@ -18,7 +18,11 @@ turmaRouter.get('/', async (req,res) => {
 
 /* Retorna turma por id */
 turmaRouter.get('/:id', async (req,res) => {
-    const turma = await sequelize.query(`SELECT * FROM turma WHERE id = ${req.params.id}`, { type: QueryTypes.SELECT })
+    const turma = await sequelize.query(`
+    SELECT turma.id, disciplina.nome AS nome_disciplina, pessoa.nome AS nome_professor FROM turma
+    INNER JOIN pessoa ON turma.id_professor = pessoa.id
+    INNER JOIN disciplina ON turma.id_disciplina = disciplina.id
+    WHERE turma.id = ${req.params.id}`, { type: QueryTypes.SELECT })
     
     res.json(turma)
 })
