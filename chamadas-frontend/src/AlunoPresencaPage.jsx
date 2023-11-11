@@ -90,19 +90,9 @@ const turmas = [
   
 // funções temporárias para resgatar dados da turma carregada
 
-function getProfessor( turmaId ){
-  const turma = turmas.filter(item => item.name.split("-")[0].trim() === turmaId)
-  return turma[0].professor
-} 
-
 function getTurma( turmaId ){
   const turma = turmas.filter(item => item.name.split("-")[0].trim() === turmaId)
   return turma[0]
-} 
-
-function getTime( turmaId ){
-  const turma = turmas.filter(item => item.name.split("-")[0].trim() === turmaId)
-  return turma[0].time
 }
 
 const AlunoPresencaPage = () => {
