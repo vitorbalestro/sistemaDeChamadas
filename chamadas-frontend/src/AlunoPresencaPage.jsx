@@ -55,21 +55,36 @@ const ApresentarProfessor = props => {
     );
 };
 
+const ApresentarFrequencia = props => {
+  return (
+    <View>
+      <Text>Você está em aula a {props.tempoEmSala} do tempo da chamada aberta.</Text>
+      <Text>Você esteve presente em {props.frequenciaNasAulas} das aulas.</Text>
+    </View>
+  );
+};
+
 const turmas = [
   {
       name: "TCC00284 - Algoritmos em Grafos",
       professor: "Fábio Protti",
-      time: "11:00 às 13:00"
+      time: "11:00 às 13:00",
+      tempoEmSala: "34%",
+      frequenciaNasAulas: "92%"
   },
   {
       name: "TCC00293 - Engenharia de Software II",
       professor: "Leonardo Murta",
-      time: "7:00 às 9:00"
+      time: "7:00 às 9:00",
+      tempoEmSala: "100%",
+      frequenciaNasAulas: "100%"
   },
   {
       name: "TCC00384 - Estruturas de Dados e seus Algoritmos",
       professor: "Isabel Rosseti",
-      time: "11:00 às 13:00"
+      time: "11:00 às 13:00",
+      tempoEmSala: "08%",
+      frequenciaNasAulas: "62%"
   },
 ]
   
@@ -80,30 +95,34 @@ function getProfessor( turmaId ){
   return turma[0].professor
 } 
 
+function getTurma( turmaId ){
+  const turma = turmas.filter(item => item.name.split("-")[0].trim() === turmaId)
+  return turma[0]
+} 
+
 function getTime( turmaId ){
   const turma = turmas.filter(item => item.name.split("-")[0].trim() === turmaId)
   return turma[0].time
 }
 
-const classTime = "07:00 - 09:00";
-
 const AlunoPresencaPage = () => {
 
     const id = useParams().id
-    const turmaName = id.split("-")[0] + " - " + id.split("-")[1]
     const turmaId = id.split("-")[0].trim()
-    const professor = getProfessor(turmaId)
-    const _time = getTime(turmaId)
+    const turma = getTurma(turmaId)
     return (
       <View style={[styles.center, {top: 50}]}>
         <Card style={styles.center}>
-          <ApresentarTurma class={turmaName}></ApresentarTurma>
-          <ApresentarHorarioTurma time={_time}></ApresentarHorarioTurma>
-          <ApresentarProfessor name={professor} />
+          <ApresentarTurma class={turma.name}></ApresentarTurma>
+          <ApresentarHorarioTurma time={turma.time}></ApresentarHorarioTurma>
+          <ApresentarProfessor name={turma.professor} />
         </Card>
         <Pressable style={styles.button} onPress={onPressPresente}>
           <Text style={styles.text}>{"Marcar presença"}</Text>
         </Pressable>
+        <Card>
+          <ApresentarFrequencia tempoEmSala={turma.tempoEmSala} frequenciaNasAulas={turma.frequenciaNasAulas}></ApresentarFrequencia>
+        </Card>
       </View>
     );
 };
