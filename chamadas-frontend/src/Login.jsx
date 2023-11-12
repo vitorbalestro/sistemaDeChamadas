@@ -61,7 +61,7 @@ export default function Login() {
 
   return (
     <ImageBackground
-      source={require('/assets/uff-logo.png')}
+      source={require('C:/UFF/ES2/gngn/sistemaDeChamadas-new-appbar/sistemaDeChamadas-new-appbar/chamadas-frontend/assets/uff-logo.png')}
       style={styles.backgroundImage}
     >
       <KeyboardAvoidingView
