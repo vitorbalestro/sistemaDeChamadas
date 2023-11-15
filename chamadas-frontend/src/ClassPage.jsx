@@ -1,8 +1,7 @@
 import { FlatList, View, StyleSheet, Text, Pressable, Dimensions } from 'react-native';
-import React from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-native';
 
-const { useState } = React;
 const windowWidth = Dimensions.get('screen').width;
 
 const styles = StyleSheet.create({
@@ -124,30 +123,33 @@ let onPressCard = ({ student }) => {
     console.log(JSON.stringify({student}));
 }
 
-let onPressPresente=({ student }) => {
-    //console.log(JSON.stringify({student})+' Presente');
+let onPressPresente=({student}, students, setStudents) => {
+    console.log(JSON.stringify({student})+' Presente');
+    let newArray = [...students]
+    let index = newArray.findIndex(newArray.nome === student.nome);
     if (student.presencaDada==="não") {
-        setStudents.presencaDada("sim");
+        newArray[index].presencaDada = "sim";
     } else {
-        setStudents.presencaDada("não");
+        newArray[index].presencaDada = "não";
     }
+    setStudents(newArray);
 }
 
 
 let onPressAusente=({ student }) => {
-    //console.log(JSON.stringify({student})+' Ausente');
+    console.log(JSON.stringify({student})+' Ausente');
 }
 
-let StudentCard = ({ student, setStudent }) => {
+let StudentCard = ({ student }, students, setStudents) => {
     return (
 
         <Pressable onPress={() => onPressCard({student})}>
             <View style={styles.flexCard}>
                 <Text style={styles.nameStyle}>{student.nome}</Text>
-                <Pressable onPress={() => onPressPresente({setStudent})} style={student.presencaDada==="não" ? styles.presenteDarButton : styles.presencaDadaButton}>
+                <Pressable onPress={() => onPressPresente({student}, students, setStudents)} style={student.presencaDada==="não" ? styles.presenteDarButton : styles.presencaDadaButton}>
                     <Text style={student.presencaDada==="não" ? styles.textPresenteDarButton : styles.textPresencaDadaButton}>Presente</Text>
                 </Pressable>
-                <Pressable onPress={()=> onPressAusente({setStudent})} style={styles.ausenteButton}>
+                <Pressable onPress={()=> onPressAusente({student})} style={styles.ausenteButton}>
                     <Text style={{color:'white'}}>Ausente</Text>
                 </Pressable>
                 <Text style={student.porcentagem>=75 ? styles.porcentPos : styles.porcentNeg}>{student.porcentagem}%</Text>
@@ -156,34 +158,33 @@ let StudentCard = ({ student, setStudent }) => {
     )
 }
 
-const studentsArray = useState([{nome: "Lexie George", presencaDada: "sim", porcentagem: 75},
-    {nome: "Nikolas Fisher", presencaDada: "não", porcentagem: 100},
-    {nome: "Mayra Jackson", presencaDada: "sim", porcentagem: 100},
-    {nome: "Jewel Watson", presencaDada: "não", porcentagem: 0},
-    {nome: "Alexandra Finley", presencaDada: "sim", porcentagem: 10},
-    {nome: "Emmalee French", presencaDada: "não", porcentagem: 45},
-    {nome: "Andres Roth", presencaDada: "sim", porcentagem: 93},
-    {nome: "Bailey Everett", presencaDada: "não", porcentagem: 50},
-    {nome: "Catalina Chaney", presencaDada: "sim", porcentagem: 89},
-    {nome: "Elisabeth Fuentes", presencaDada: "não", porcentagem: 74},
-    {nome: "Deven Bishop", presencaDada: "sim", porcentagem: 63},
-    {nome: "Cael Rosario", presencaDada: "não", porcentagem: 77},
-    {nome: "Christopher Smith Hartmann Fields", presencaDada: "sim", porcentagem: 1}])
-
 let ClassPage = () => {
 
+    const [students, setStudents] = useState([
+        {nome: "Lexie George", presencaDada: "sim", porcentagem: 75},
+        {nome: "Nikolas Fisher", presencaDada: "não", porcentagem: 100},
+        {nome: "Mayra Jackson", presencaDada: "sim", porcentagem: 100},
+        {nome: "Jewel Watson", presencaDada: "não", porcentagem: 0},
+        {nome: "Alexandra Finley", presencaDada: "sim", porcentagem: 10},
+        {nome: "Emmalee French", presencaDada: "não", porcentagem: 45},
+        {nome: "Andres Roth", presencaDada: "sim", porcentagem: 93},
+        {nome: "Bailey Everett", presencaDada: "não", porcentagem: 50},
+        {nome: "Catalina Chaney", presencaDada: "sim", porcentagem: 89},
+        {nome: "Elisabeth Fuentes", presencaDada: "não", porcentagem: 74},
+        {nome: "Deven Bishop", presencaDada: "sim", porcentagem: 63},
+        {nome: "Cael Rosario", presencaDada: "não", porcentagem: 77},
+        {nome: "Christopher Smith Hartmann Fields", presencaDada: "sim", porcentagem: 1}]);
     let id = useParams().id;
     let turmaHeader = id.split("-")[0] + " - " + id.split("-")[1]
-    const [students, setStudents] = useState(studentsArray);
 
     return (
         <View style={styles.container}>
             <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
                 <FlatList
                     ListHeaderComponent={<ListHeader className={turmaHeader} />}
-                    data={students, setStudents}
+                    data={students}
                     ItemSeparatorComponent={ItemSeparator}
-                    renderItem={({ item }) => <StudentCard student={item}/>}
+                    renderItem={({ item }, students, setStudents) => <StudentCard student={item}/>}
                 />
             </View>
         </View>
