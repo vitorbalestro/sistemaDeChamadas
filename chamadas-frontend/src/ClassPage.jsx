@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         //fontWeight: 'bold'
     },
-    presenteDarButton: {
+    presenteButton: {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'blue',
@@ -70,21 +70,6 @@ const styles = StyleSheet.create({
         width: 65,
         height: 25,
         borderRadius: 5,
-    },
-    textPresenteDarButton: {
-        color: 'white'
-    },
-    presencaDadaButton: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        border: '1px solid blue',
-        width: 65,
-        height: 25,
-        borderRadius: 5,
-    },
-    textPresencaDadaButton: {
-        color: 'blue'
     },
     ausenteButton: {
         justifyContent: 'center',
@@ -123,31 +108,29 @@ let onPressCard = ({ student }) => {
     console.log(JSON.stringify({student}));
 }
 
-let onPressPresente=({student}, students, setStudents) => {
-    console.log(JSON.stringify({student})+' Presente');
-    let newArray = [...students]
-    let index = newArray.findIndex(newArray.nome === student.nome);
+let onPressPresente=({student}) => {
     if (student.presencaDada==="não") {
-        newArray[index].presencaDada = "sim";
+        student.presencaDada = "sim";
     } else {
-        newArray[index].presencaDada = "não";
+        student.presencaDada = "não";
     }
-    setStudents(newArray);
+    console.log(JSON.stringify({student})+' Presente');
 }
 
 
 let onPressAusente=({ student }) => {
+    student.presencaDada = "não";
     console.log(JSON.stringify({student})+' Ausente');
 }
 
-let StudentCard = ({ student }, students, setStudents) => {
+let StudentCard = ({ student }) => {
     return (
 
         <Pressable onPress={() => onPressCard({student})}>
             <View style={styles.flexCard}>
                 <Text style={styles.nameStyle}>{student.nome}</Text>
-                <Pressable onPress={() => onPressPresente({student}, students, setStudents)} style={student.presencaDada==="não" ? styles.presenteDarButton : styles.presencaDadaButton}>
-                    <Text style={student.presencaDada==="não" ? styles.textPresenteDarButton : styles.textPresencaDadaButton}>Presente</Text>
+                <Pressable onPress={() => onPressPresente({student})} style={styles.presenteButton}>
+                    <Text style={{color:'white'}}>Presente</Text>
                 </Pressable>
                 <Pressable onPress={()=> onPressAusente({student})} style={styles.ausenteButton}>
                     <Text style={{color:'white'}}>Ausente</Text>
@@ -158,22 +141,22 @@ let StudentCard = ({ student }, students, setStudents) => {
     )
 }
 
-let ClassPage = () => {
+const students = [
+    {nome: "Lexie George", presencaDada: "sim", porcentagem: 75},
+    {nome: "Nikolas Fisher", presencaDada: "não", porcentagem: 100},
+    {nome: "Mayra Jackson", presencaDada: "sim", porcentagem: 100},
+    {nome: "Jewel Watson", presencaDada: "não", porcentagem: 0},
+    {nome: "Alexandra Finley", presencaDada: "sim", porcentagem: 10},
+    {nome: "Emmalee French", presencaDada: "não", porcentagem: 45},
+    {nome: "Andres Roth", presencaDada: "sim", porcentagem: 93},
+    {nome: "Bailey Everett", presencaDada: "não", porcentagem: 50},
+    {nome: "Catalina Chaney", presencaDada: "sim", porcentagem: 89},
+    {nome: "Elisabeth Fuentes", presencaDada: "não", porcentagem: 74},
+    {nome: "Deven Bishop", presencaDada: "sim", porcentagem: 63},
+    {nome: "Cael Rosario", presencaDada: "não", porcentagem: 77},
+    {nome: "Christopher Smith Hartmann Fields", presencaDada: "sim", porcentagem: 1}];
 
-    const [students, setStudents] = useState([
-        {nome: "Lexie George", presencaDada: "sim", porcentagem: 75},
-        {nome: "Nikolas Fisher", presencaDada: "não", porcentagem: 100},
-        {nome: "Mayra Jackson", presencaDada: "sim", porcentagem: 100},
-        {nome: "Jewel Watson", presencaDada: "não", porcentagem: 0},
-        {nome: "Alexandra Finley", presencaDada: "sim", porcentagem: 10},
-        {nome: "Emmalee French", presencaDada: "não", porcentagem: 45},
-        {nome: "Andres Roth", presencaDada: "sim", porcentagem: 93},
-        {nome: "Bailey Everett", presencaDada: "não", porcentagem: 50},
-        {nome: "Catalina Chaney", presencaDada: "sim", porcentagem: 89},
-        {nome: "Elisabeth Fuentes", presencaDada: "não", porcentagem: 74},
-        {nome: "Deven Bishop", presencaDada: "sim", porcentagem: 63},
-        {nome: "Cael Rosario", presencaDada: "não", porcentagem: 77},
-        {nome: "Christopher Smith Hartmann Fields", presencaDada: "sim", porcentagem: 1}]);
+let ClassPage = () => {
     let id = useParams().id;
     let turmaHeader = id.split("-")[0] + " - " + id.split("-")[1]
 
@@ -184,7 +167,7 @@ let ClassPage = () => {
                     ListHeaderComponent={<ListHeader className={turmaHeader} />}
                     data={students}
                     ItemSeparatorComponent={ItemSeparator}
-                    renderItem={({ item }, students, setStudents) => <StudentCard student={item}/>}
+                    renderItem={({ item }) => <StudentCard student={item}/>}
                 />
             </View>
         </View>
