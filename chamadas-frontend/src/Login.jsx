@@ -13,8 +13,16 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigate } from 'react-router-native';
 import loginService from '../services/login';
+import AppBar from './AppBar';
+
 
 export default function Login() {
+
+  window.localStorage.removeItem('cpf_logged_user')
+  window.localStorage.removeItem('name_logged_user')
+  window.localStorage.removeItem('role_logged_user')
+  window.localStorage.removeItem('id_logged_user')
+
   const navigate = useNavigate();
   const [cpf, setCPF] = useState('');
   const [senha, setSenha] = useState('');
@@ -43,6 +51,12 @@ export default function Login() {
   const handleLogin = async () => {
     const credentials = { cpf, senha };
     const user = await loginService.getUser(credentials);
+
+    window.localStorage.setItem('cpf_logged_user', user.cpf)
+    window.localStorage.setItem('name_logged_user', user.nome)
+    window.localStorage.setItem('role_logged_user', user.tipo)
+    window.localStorage.setItem('id_logged_user', user.id)
+
     const id = user.id;
     const tipo = user.tipo;
     if(tipo === "professor") {
@@ -60,8 +74,11 @@ export default function Login() {
   };
 
   return (
+
+
     <ImageBackground
-      source={require('C:/UFF/ES2/gngn/sistemaDeChamadas-new-appbar/sistemaDeChamadas-new-appbar/chamadas-frontend/assets/uff-logo.png')}
+      //source={require('C:/UFF/ES2/gngn/sistemaDeChamadas-new-appbar/sistemaDeChamadas-new-appbar/chamadas-frontend/assets/uff-logo.png')}
+      source={require('/assets/uff-logo.png')}
       style={styles.backgroundImage}
     >
       <KeyboardAvoidingView

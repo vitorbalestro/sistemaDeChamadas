@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import { View, Text, Pressable, FlatList, StyleSheet, Dimensions } from 'react-native';
 import { useNavigate, useParams } from 'react-router-native';
 import turmasService from '../services/turma';
+import AppBar from './AppBar';
+
 
 const windowWidth = Dimensions.get('screen').width;
 
@@ -85,15 +87,15 @@ const onPressButton = (action, turma, navigate, role) => {
             const turmaUrl = `/aluno/${encodeURIComponent(turma.id)}`;
             navigate(turmaUrl);
         } else {
-            navigate(`/classpage/${encodeURIComponent(turma.nome)}`);
+            navigate(`/historicoaluno/${turma.id}`);
         }
     }
     if (role === 'professor') {
         if (action === 'Presença') {
-            const turmaUrl = `/turma/${encodeURIComponent(turma.nome)}`;
+            const turmaUrl = `/turma/${encodeURIComponent(turma.id)}`;
             navigate(turmaUrl);
         } else {
-            navigate(`/classpage/${encodeURIComponent(turma.codigo)}`);
+            navigate(`/classpage/${encodeURIComponent(turma.nome)}`);
         }
     }
 };
@@ -173,20 +175,23 @@ const TurmasPage = () => {
     
 
     return (
-        <View style={styles.container}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={styles.roleStyle}>{roleHeader}</Text>
-                <Text style={styles.dateStyle}>{getCurrentDate()}</Text>
+        <>
+            <AppBar />
+            <View style={styles.container}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Text style={styles.roleStyle}>{roleHeader}</Text>
+                    <Text style={styles.dateStyle}>{getCurrentDate()}</Text>
+                </View>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <FlatList
+                        ListHeaderComponent={<TurmasHeader />}
+                        data={turmas}
+                        ItemSeparatorComponent={ItemSeparator}
+                        renderItem={({ item }) => <TurmaCard role={role} turma={item} navigate={navigate} />}
+                    />
+                </View>
             </View>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <FlatList
-                    ListHeaderComponent={<TurmasHeader />}
-                    data={turmas}
-                    ItemSeparatorComponent={ItemSeparator}
-                    renderItem={({ item }) => <TurmaCard role={role} turma={item} navigate={navigate} />}
-                />
-            </View>
-        </View>
+        </>
     );
 };
 

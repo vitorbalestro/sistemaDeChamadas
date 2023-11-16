@@ -4,6 +4,10 @@ import { Card } from 'react-native-elements'
 import { useParams } from 'react-router-native'
 import turmaService from '../services/turma'
 import { useState, useEffect } from 'react'
+import AppBar from './AppBar';
+import inscricaoService from '../services/inscricao'
+import presencaService from '../services/presenca'
+
 
 
 const styles = StyleSheet.create({
@@ -30,22 +34,21 @@ const styles = StyleSheet.create({
     },
   });
 
-const onPressPresente = () => {
-    console.log("Sua presença foi registrada!")
+const onPressPresente = async (id_turma,id_aluno) => {
+
+    const inscricao = await inscricaoService.getInscricao(id_turma,id_aluno)
+    const id_inscricao = inscricao[0].id
+    const body = { id_inscricao }
+
+    const presenca = await presencaService.postPresenca(body)
+    console.log(presenca)
+
 }
 
 const ApresentarTurma = props => {
     return (
         <View style={styles.center}>
             <Text style={styles.center}>{props.class}</Text>
-        </View>
-    )
-}
-
-const ApresentarHorarioTurma = props => {
-    return (
-        <View style={styles.center}>
-            <Text>Horário das aulas: {props.time}</Text>
         </View>
     )
 }
@@ -61,62 +64,58 @@ const ApresentarProfessor = props => {
 const ApresentarFrequencia = props => {
   return (
     <View>
-      <Text>Você está em aula a {props.tempoEmSala} do tempo da chamada aberta.</Text>
+      <Text>Você está em aula há {props.tempoEmSala} do tempo da chamada aberta.</Text>
       <Text>Você esteve presente em {props.frequenciaNasAulas} das aulas.</Text>
     </View>
   );
 };
 
-const turmas = [
-  {
-      name: "TCC00284 - Algoritmos em Grafos",
-      professor: "Fábio Protti",
-      time: "11:00 às 13:00",
-      tempoEmSala: "34%",
-      frequenciaNasAulas: "92%"
-  },
-  {
-      name: "TCC00293 - Engenharia de Software II",
-      professor: "Leonardo Murta",
-      time: "7:00 às 9:00",
-      tempoEmSala: "100%",
-      frequenciaNasAulas: "100%"
-  },
-  {
-      name: "TCC00384 - Estruturas de Dados e seus Algoritmos",
-      professor: "Isabel Rosseti",
-      time: "11:00 às 13:00",
-      tempoEmSala: "08%",
-      frequenciaNasAulas: "62%"
-  },
-]
   
-// funções temporárias para resgatar dados da turma carregada
 
-function getTurma( turmaId ){
-  const turma = turmas.filter(item => item.name.split("-")[0].trim() === turmaId)
-  return turma[0]
-}
 
 const AlunoPresencaPage = () => {
 
-    const id = useParams().id
-    const turmaId = id.split("-")[0].trim()
-    const turma = getTurma(turmaId)
+  const id_turma = useParams().id
+  const [ turma, setTurma ] = useState();
+
+  const id_aluno = window.localStorage.getItem('id_logged_user')
+
+
+  useEffect(() => {
+    async function fetchTurma() {
+          const response = await turmaService.getTurmaPorId(id_turma);
+          setTurma(response.data[0]);
+          return;
+    }
+         
+    fetchTurma()
+  }
+  , []);
+
+  var turmaName = ""
+  var professor = ""
+
+  if(turma !== undefined) {
+    turmaName = turma.nome_disciplina;
+    professor = turma.nome_professor;
+  }
+
     return (
-      <View style={[styles.center, {top: 50}]}>
-        <Card style={styles.center}>
-          <ApresentarTurma class={turma.name}></ApresentarTurma>
-          <ApresentarHorarioTurma time={turma.time}></ApresentarHorarioTurma>
-          <ApresentarProfessor name={turma.professor} />
-        </Card>
-        <Pressable style={styles.button} onPress={onPressPresente}>
-          <Text style={styles.text}>{"Marcar presença"}</Text>
-        </Pressable>
-        <Card>
-          <ApresentarFrequencia tempoEmSala={turma.tempoEmSala} frequenciaNasAulas={turma.frequenciaNasAulas}></ApresentarFrequencia>
-        </Card>
-      </View>
+      <>
+        <AppBar />
+        <View style={[styles.center, {top: 50}]}>
+          <Card style={styles.center}>
+            <ApresentarTurma class={turmaName}></ApresentarTurma>
+            <ApresentarProfessor name={professor} />
+          </Card>
+          <Pressable style={styles.button} onPress={() => onPressPresente(id_turma,id_aluno)}>
+            <Text style={styles.text}>{"Marcar presença"}</Text>
+          </Pressable>
+          <Card>
+            <ApresentarFrequencia tempoEmSala={'50 minutos'} frequenciaNasAulas={'80%'}></ApresentarFrequencia>
+          </Card>
+        </View>
+      </>
     );
 };
 

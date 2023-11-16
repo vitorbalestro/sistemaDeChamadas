@@ -1,5 +1,7 @@
 import { FlatList, View, StyleSheet, Text, Pressable, Dimensions } from 'react-native';
 import { useParams } from 'react-router-native';
+import AppBar from './AppBar';
+
 
 const windowWidth = Dimensions.get('screen').width;
 
@@ -174,16 +176,19 @@ let ClassPage = () => {
     let turmaHeader = id.split("-")[0]
 
     return (
-        <View style={styles.container}>
-            <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
-                <FlatList
-                    ListHeaderComponent={<ListHeader className={turmaHeader} />}
-                    data={students}
-                    ItemSeparatorComponent={ItemSeparator}
-                    renderItem={({ item }) => <StudentCard student={item}/>}
-                />
+        <>
+            <AppBar />
+            <View style={styles.container}>
+                <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
+                    <FlatList
+                        ListHeaderComponent={<ListHeader className={turmaHeader} />}
+                        data={students}
+                        ItemSeparatorComponent={ItemSeparator}
+                        renderItem={({ item }) => <StudentCard student={item}/>}
+                    />
+                </View>
             </View>
-        </View>
+        </>
     );
 }
 

@@ -6,6 +6,7 @@ const app = express()
 const turmaRouter = require('./controllers/turma')
 const presencaRouter = require('./controllers/presenca')
 const loginRouter = require('./controllers/login')
+const inscricaoRouter = require('./controllers/inscricao')
 
 app.use(cors())
 app.use(express.json())
@@ -14,6 +15,7 @@ app.use(express.json())
 app.use('/api/turma', turmaRouter)
 app.use('/api/presenca', presencaRouter)
 app.use('/api/login',loginRouter)
+app.use('/api/inscricao',inscricaoRouter)
 
 const PORT = process.env.PORT
 console.log(PORT)
