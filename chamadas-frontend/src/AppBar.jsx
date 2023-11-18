@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, StyleSheet, View, SafeAreaView } from 'react-native';
 import { Link } from 'react-router-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const styles = StyleSheet.create({
     appBarText: {
@@ -21,82 +20,43 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalContent: {
-        backgroundColor: 'blue',
-        padding: 20,
-        borderRadius: 10,
-        width: 150,
-    },
-    modalOption: {
-        paddingVertical: 10,
-    },
-    selectedOptionContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    arrowIcon: {
-        color: 'white',
-        marginLeft: 5,
-    },
 });
 
-const AppBarTab = ({ title, onSelect, options }) => {
-    const [modalVisible, setModalVisible] = useState(false);
-
-    const handleSelect = (option) => {
-        setModalVisible(false);
-        onSelect(option);
-    };
-
-    return (
-        <View style={styles.selectedOptionContainer}>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={[styles.appBarText, { color: 'white' }]}>{title}</Text>
-                    <Icon name="keyboard-arrow-down" size={20} style={styles.arrowIcon} />
-                </View>
-            </TouchableOpacity>
-            <Modal
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={[styles.modalContent, { backgroundColor: 'blue' }]}>
-                        {options.map((option) => (
-                            <TouchableOpacity
-                                key={option}
-                                style={styles.modalOption}
-                                onPress={() => handleSelect(option)}
-                            >
-                                <Text style={{ color: 'white' }}>{option}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </View>
-            </Modal>
-        </View>
-    );
-};
-
 const SignedInAppBar = () => {
-    const [selectedRole, setSelectedRole] = useState('Professor');
-    const roles = ['Professor', 'Doutorando', 'Mestrando', 'Graduando'];
+
+    var cpf_user = ""
+    var role_user = ""
+    var id_user = ""
+
+    try{
+        cpf_user = window.localStorage.getItem('cpf_logged_user')
+        role_user = window.localStorage.getItem('role_logged_user')
+        id_user = window.localStorage.getItem('id_logged_user')
+    }catch {
+        
+    }
+
+    const [selectedCPF, setSelectedCPF] = useState('');
+
+    /* Fetch the CPF data from the database
+    useEffect(() => {
+        const fetchCPF = async () => {
+            // Replace the following line with your actual logic to fetch the unique CPF
+            // For simplicity, let's assume yourDatabaseFetchFunction returns the single CPF
+            const fetchedCPF = await yourDatabaseFetchFunction();
+            setSelectedCPF(fetchedCPF);
+        };
+
+        fetchCPF();
+    }, []);*/
+
+    const turmas_link = `/turmas/${role_user}/${id_user}`
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.buttonContainer}>
-                <AppBarTab
-                    title={selectedRole}
-                    onSelect={setSelectedRole}
-                    options={roles}
-                />
-                <Link to="/turmas/professor">
+                <Text style={[styles.appBarText, { color: 'white' }]}>{cpf_user}</Text>
+                <Link to={turmas_link}>
                     <Text style={styles.appBarText}>Turmas</Text>
                 </Link>
                 <Link to="/login">

@@ -16,12 +16,17 @@ presencaRouter.get('/', async (req,res) => {
     res.json(presencas)
 })
 
+presencaRouter.get('/:id_inscricao', async (req,res) => {
+    const id_inscricao = req.params.id_inscricao
+    const presencas = await sequelize.query(`SELECT * FROM presenca WHERE id_inscricao =${id_inscricao}`, { type: QueryTypes.SELECT})
+    res.json(presencas)
+})
+
 presencaRouter.post('/', async (req,res) => {
     const id_inscricao = req.body.id_inscricao
-    const currentDate = new Date()
-    const timestamp = currentDate.getTime()
+    
     const presenca = await sequelize.query(
-        `INSERT INTO presenca (id_inscricao, data) VALUES (${id_inscricao}, to_timestamp(${timestamp}))`, { type: QueryTypes.INSERT })
+        `INSERT INTO presenca (id_inscricao, data) VALUES (${id_inscricao}, to_timestamp(${Date.now()/1000}))`, { type: QueryTypes.INSERT })
     res.json(presenca)
 
 })
