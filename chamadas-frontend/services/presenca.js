@@ -12,4 +12,9 @@ const getByInscricao = async (id_inscricao) => {
     return response.data
 }
 
-export default { postPresenca, getByInscricao }
+const deletePresenca = async (id_inscricao) => {
+    const response = await axios.delete(`${baseUrl}/${id_inscricao}`)
+    return response.data
+}
+
+export default { postPresenca, getByInscricao, deletePresenca }

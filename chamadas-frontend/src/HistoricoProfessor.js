@@ -1,5 +1,4 @@
-import presencaService from '../services/presenca'
-import inscricaoService from '../services/inscricao'
+import aulaService from '../services/aula'
 import { useParams } from 'react-router-native'
 import { useState, useEffect } from 'react'
 import turmaService from '../services/turma'
@@ -32,30 +31,29 @@ const styles = StyleSheet.create({
     },
   });
 
-const HistoricoAluno = () => {
+const HistoricoProfessor = () => {
 
-    const id_aluno = window.localStorage.getItem('id_logged_user')
     const id_turma = useParams().id_turma
 
     const [ historico, setHistorico ] = useState([])
     const [ turma, setTurma ] = useState()
 
     useEffect(() => {
-        async function fetchPresencasAndTurma() {
-            const inscricao = await inscricaoService.getInscricao(id_turma,id_aluno)
-            const id_inscricao = inscricao[0].id
+        async function fetchAulas() {
+            
     
-            const res_historico = await presencaService.getByInscricao(id_inscricao)
+            const res_historico = await aulaService.getAulasDaTurma(id_turma)
             
             setHistorico(res_historico)
 
-            //console.log(historico)
+          // console.log(historico)
 
             const response = await turmaService.getTurmaPorId(id_turma);
             setTurma(response.data[0]);
+
             return;
         }
-        fetchPresencasAndTurma()
+        fetchAulas()
         
     }, [])
 
@@ -98,7 +96,7 @@ const HistoricoAluno = () => {
       
       if(historico !== undefined){
         const datas = historico.map((pres) => {
-            const data_ = new Date(pres.data)
+            const data_ = new Date(pres.data_)
             const dia = data_.getDate()
             const mes = data_.getMonth() + 1
             const ano = data_.getFullYear()
@@ -111,9 +109,11 @@ const HistoricoAluno = () => {
           }
         }
       }
+      var text
+      datasArray.length === 0 ? text = "Não há aulas registradas desta disciplina" : text = "Houve aula da turma nas seguintes datas:"
         return (
             <View>
-                <Text>Você esteve presente nos seguintes dias:</Text>
+                <Text>{text}</Text>
                 <FlatList
                         data={(Array.isArray(datasArray) ? datasArray : [])}
                         renderItem={({ item }) => <MostraData data_={item}/>}
@@ -140,4 +140,4 @@ const HistoricoAluno = () => {
 
 }
 
-export default HistoricoAluno
+export default HistoricoProfessor
