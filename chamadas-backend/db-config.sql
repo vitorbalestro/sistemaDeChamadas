@@ -73,6 +73,14 @@ VALUES
  CONSTRAINT fk_inscricao FOREIGN KEY (id_inscricao) REFERENCES inscricao(id)
  );
 
+CREATE TABLE aula (
+    id SERIAL PRIMARY KEY,
+    id_turma int NOT NULL,
+    data_ timestamp NOT NULL,
+    status_code int NOT NULL,
+    CONSTRAINT fk_turma FOREIGN KEY (id_turma) REFERENCES turma(id)
+)
+
 CREATE TABLE login_ (
     id SERIAL PRIMARY KEY,
     cpf char(11) NOT NULL,

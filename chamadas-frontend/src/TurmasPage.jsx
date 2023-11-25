@@ -95,7 +95,7 @@ const onPressButton = (action, turma, navigate, role) => {
             const turmaUrl = `/turma/${encodeURIComponent(turma.id)}`;
             navigate(turmaUrl);
         } else {
-            navigate(`/classpage/${encodeURIComponent(turma.nome)}`);
+            navigate(`/professorhistorico/${turma.id}`);
         }
     }
 };

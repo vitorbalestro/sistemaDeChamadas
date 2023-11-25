@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Alert } from 'react-native';
 import { Card } from 'react-native-elements'
-import { useParams } from 'react-router-native'
+import { useParams, useNavigate } from 'react-router-native'
 import turmaService from '../services/turma'
 import { useState, useEffect } from 'react'
 import AppBar from './AppBar';
 import inscricaoService from '../services/inscricao'
 import presencaService from '../services/presenca'
+import aulaService from '../services/aula'
 
 
 
@@ -34,14 +35,23 @@ const styles = StyleSheet.create({
     },
   });
 
-const onPressPresente = async (id_turma,id_aluno) => {
+  const presencaAlert = (navigate,id_aluno) =>{
+    console.log("presencaAlert chamada")
+    
+    Alert.alert('Sucesso!', 'Sua presença foi registrada com sucesso', [
+    
+    {text: 'OK', onPress: () => navigate(`/turmas/aluno/${id_aluno}`)},
+  ])}
+
+const onPressPresente = async (id_turma,id_aluno,navigate) => {
 
     const inscricao = await inscricaoService.getInscricao(id_turma,id_aluno)
     const id_inscricao = inscricao[0].id
     const body = { id_inscricao }
 
     const presenca = await presencaService.postPresenca(body)
-    console.log(presenca)
+    presencaAlert(navigate,id_aluno)
+    navigate(`/turmas/aluno/${id_aluno}`)
 
 }
 
@@ -61,22 +71,35 @@ const ApresentarProfessor = props => {
     );
 };
 
-const ApresentarFrequencia = props => {
-  return (
-    <View>
-      <Text>Você está em aula há {props.tempoEmSala} do tempo da chamada aberta.</Text>
-      <Text>Você esteve presente em {props.frequenciaNasAulas} das aulas.</Text>
-    </View>
-  );
-};
 
-  
 
 
 const AlunoPresencaPage = () => {
 
+  const PresencaButtonOrText = () => {
+
+    if(!presencaAberta) {
+      return (
+        <View>
+          <Text style={{marginTop: 20}}>
+            A presença não está aberta para esta turma.
+          </Text>
+        </View>
+      )
+    }else {
+      return (
+        <Pressable style={styles.button} onPress={() => onPressPresente(id_turma,id_aluno,navigate)}>
+              <Text style={styles.text}>{"Marcar presença"}</Text>
+            </Pressable>
+      )
+    }
+  
+  }
+
   const id_turma = useParams().id
-  const [ turma, setTurma ] = useState();
+  const [ turma, setTurma ] = useState()
+  const [ presencaAberta, setPresencaAberta ] = useState(false)
+  const navigate = useNavigate()
 
   const id_aluno = window.localStorage.getItem('id_logged_user')
 
@@ -85,12 +108,24 @@ const AlunoPresencaPage = () => {
     async function fetchTurma() {
           const response = await turmaService.getTurmaPorId(id_turma);
           setTurma(response.data[0]);
+
+          const res_aulas = await aulaService.getAulasDaTurma(id_turma)
+          var status = 0
+          if(res_aulas[0] !== undefined){
+            status = res_aulas[0].status_code
+           // console.log(status)
+          }
+          if(status === 1) {
+            setPresencaAberta(true)
+          }else {
+            setPresencaAberta(false)
+          }
           return;
     }
          
     fetchTurma()
   }
-  , []);
+  , [presencaAberta]);
 
   var turmaName = ""
   var professor = ""
@@ -108,15 +143,12 @@ const AlunoPresencaPage = () => {
             <ApresentarTurma class={turmaName}></ApresentarTurma>
             <ApresentarProfessor name={professor} />
           </Card>
-          <Pressable style={styles.button} onPress={() => onPressPresente(id_turma,id_aluno)}>
-            <Text style={styles.text}>{"Marcar presença"}</Text>
-          </Pressable>
-          <Card>
-            <ApresentarFrequencia tempoEmSala={'50 minutos'} frequenciaNasAulas={'80%'}></ApresentarFrequencia>
-          </Card>
+          <PresencaButtonOrText />
         </View>
       </>
     );
 };
 
 export default AlunoPresencaPage;
+
+

@@ -1,7 +1,12 @@
 import { FlatList, View, StyleSheet, Text, Pressable, Dimensions } from 'react-native';
 import { useParams } from 'react-router-native';
 import AppBar from './AppBar';
-
+import { useState, useEffect } from 'react'
+import inscricaoService from '../services/inscricao'
+import turmaService from '../services/turma'
+import aulaService from '../services/aula'
+import StudentCard from './AlunoCard'
+import AbrirPresencaButton from './AbrirPresencaButton'
 
 const windowWidth = Dimensions.get('screen').width;
 
@@ -111,69 +116,65 @@ const getCurrentDate = () => {
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const ListHeader = ({ className }) => {
+const ListHeader = ({ className, id_turma }) => {
     return (
         <View>
             <Text style={styles.classHeaderStyle}>{className}</Text>
             <Text style={styles.dateHeaderStyle}>{getCurrentDate()}</Text>
+            <AbrirPresencaButton style={{justifyContent: 'center', alignItems: 'center', display: 'flex' }} id_turma={id_turma}/>
         </View>
     )
 }
 
-let onPressCard = ({ student }) => {
-    console.log(JSON.stringify({student}));
-}
-
-let onPressPresente=({ student }) => {
-    console.log(JSON.stringify({student})+' Presente');
-    if (student.presencaDada==="não") {
-        student.presencaDada="sim";
-    } else {
-        student.presencaDada="não";
-    }
-}
-
-
-let onPressAusente=({ student }) => {
-    console.log(JSON.stringify({student})+' Ausente');
-}
-
-let StudentCard = ({ student }) => {
-    return (
-
-        <Pressable onPress={() => onPressCard({student})}>
-            <View style={styles.flexCard}>
-                <Text style={styles.nameStyle}>{student.nome}</Text>
-                <Pressable onPress={() => onPressPresente({student})} style={student.presencaDada==="não" ? styles.presenteDarButton : styles.presencaDadaButton}>
-                    <Text style={student.presencaDada==="não" ? styles.textPresenteDarButton : styles.textPresencaDadaButton}>Presente</Text>
-                </Pressable>
-                <Pressable onPress={()=> onPressAusente({student})} style={styles.ausenteButton}>
-                    <Text style={{color:'white'}}>Ausente</Text>
-                </Pressable>
-                <Text style={student.porcentagem>=75 ? styles.porcentPos : styles.porcentNeg}>{student.porcentagem}%</Text>
-            </View>
-        </Pressable>
-    )
-}
-
-let students = [{nome: "Lexie George", presencaDada: "sim", porcentagem: 75},
-    {nome: "Nikolas Fisher", presencaDada: "não", porcentagem: 100},
-    {nome: "Mayra Jackson", presencaDada: "sim", porcentagem: 100},
-    {nome: "Jewel Watson", presencaDada: "não", porcentagem: 0},
-    {nome: "Alexandra Finley", presencaDada: "sim", porcentagem: 10},
-    {nome: "Emmalee French", presencaDada: "não", porcentagem: 45},
-    {nome: "Andres Roth", presencaDada: "sim", porcentagem: 93},
-    {nome: "Bailey Everett", presencaDada: "não", porcentagem: 50},
-    {nome: "Catalina Chaney", presencaDada: "sim", porcentagem: 89},
-    {nome: "Elisabeth Fuentes", presencaDada: "não", porcentagem: 74},
-    {nome: "Deven Bishop", presencaDada: "sim", porcentagem: 63},
-    {nome: "Cael Rosario", presencaDada: "não", porcentagem: 77},
-    {nome: "Christopher Smith Hartmann Fields", presencaDada: "sim", porcentagem: 1}]
 
 let ClassPage = () => {
 
-    let id = useParams().id;
-    let turmaHeader = id.split("-")[0]
+    let id_turma = useParams().id;
+    const [ turma, setTurma ] = useState()
+
+    const [ alunos, setAlunos ] = useState([])
+
+
+    useEffect(() => {
+        async function fetchTurma() {
+              const response = await turmaService.getTurmaPorId(id_turma);
+              setTurma(response.data[0]);
+
+              const res_alunos = await inscricaoService.getAlunosPorTurma(id_turma)
+              setAlunos(res_alunos)
+              //console.log(res_alunos)
+            
+             
+        
+
+            
+
+              setAlunos(res_alunos.map((aluno) =>  {
+                
+                return { id_aluno: aluno.id_aluno, nome: aluno.nome, id_turma: aluno.id_turma, id_inscricao: aluno.id }
+
+              }))
+
+              return;
+        }
+             
+        fetchTurma()
+      }
+      , []);
+    
+      var turmaName = ""
+      var professor = ""
+      var alunosArray = []
+      
+    
+      if(turma !== undefined) {
+        turmaName = turma.nome_disciplina;
+        professor = turma.nome_professor;
+      }
+
+      if(alunos !== undefined) {
+        alunosArray = alunos
+      }
 
     return (
         <>
@@ -181,8 +182,8 @@ let ClassPage = () => {
             <View style={styles.container}>
                 <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
                     <FlatList
-                        ListHeaderComponent={<ListHeader className={turmaHeader} />}
-                        data={students}
+                        ListHeaderComponent={<ListHeader className={turmaName} id_turma={id_turma} />}
+                        data={alunosArray}
                         ItemSeparatorComponent={ItemSeparator}
                         renderItem={({ item }) => <StudentCard student={item}/>}
                     />

@@ -19,4 +19,12 @@ inscricaoRouter.get('/:id_turma/:id_aluno', async (req,res) => {
     res.json(inscricao)
 })
 
+inscricaoRouter.get('/:id_turma', async (req,res) => {
+    const id_turma = req.params.id_turma
+    const alunos = await sequelize.query(`
+    SELECT inscricao.id AS id, inscricao.id_aluno, inscricao.id_turma, pessoa.nome FROM inscricao INNER JOIN pessoa ON inscricao.id_aluno = pessoa.id
+    WHERE inscricao.id_turma = ${id_turma}`, { type: QueryTypes.SELECT })
+    res.json(alunos)
+})
+
 module.exports = inscricaoRouter

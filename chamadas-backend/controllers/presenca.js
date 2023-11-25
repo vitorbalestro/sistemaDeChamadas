@@ -31,9 +31,15 @@ presencaRouter.post('/', async (req,res) => {
 
 })
 
-presencaRouter.delete('/:id', async (req,res) => {
-    const id = req.params.id
-    const presencaDeleted = await sequelize.query(`DELETE FROM presenca WHERE id = ${id}`, { type: QueryTypes.DELETE })
+presencaRouter.delete('/:id_inscricao', async (req,res) => {
+    const data_ = new Date()
+    const dia = data_.getDate()
+    const mes = data_.getMonth()+1
+    const id_inscricao = req.params.id_inscricao
+    const presencaDeleted = await sequelize.query
+    (`DELETE FROM presenca WHERE id_inscricao = ${id_inscricao} AND EXTRACT(DAY FROM data) = ${dia}
+    AND EXTRACT(MONTH FROM data) = ${mes}`
+    , { type: QueryTypes.DELETE })
     res.json(presencaDeleted)
 })
 
